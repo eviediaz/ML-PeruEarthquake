@@ -22,12 +22,21 @@ df.head()
 
 df.info()
 
+#Convertir las columnas a tipo numerico
 df['LATITUD'] = df['LATITUD'].str.replace(',', '.').astype(float)
 df['LONGITUD'] = df['LONGITUD'].str.replace(',', '.').astype(float)
 df['MAGNITUD'] = df['MAGNITUD'].str.replace(',', '.').astype(float)
 
-# Verificar que los datos ahora estén en formato numérico
+# Verificar que los datos ahora esten en formato numerico
 print(df.dtypes)
+
+#Dividir los datos en datos de entrenamiento y pruebas
+# Seleccionar columnas relevantes
+X = df[['LATITUD', 'LONGITUD', 'PROFUNDIDAD']]
+y = df['MAGNITUD']
+
+# Dividir los datos en conjuntos de entrenamiento y prueba
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
 # Entrenar el modelo de regresión lineal
 regressor = LinearRegression()
