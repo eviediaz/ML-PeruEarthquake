@@ -28,3 +28,7 @@ df['MAGNITUD'] = df['MAGNITUD'].str.replace(',', '.').astype(float)
 
 # Verificar que los datos ahora estén en formato numérico
 print(df.dtypes)
+
+# Entrenar el modelo de regresión lineal
+regressor = LinearRegression()
+regressor.fit(X_train, y_train)
