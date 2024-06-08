@@ -41,3 +41,22 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 # Entrenar el modelo de regresión lineal
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
+
+#Predecir los datos de prueba
+#Encuentrar los valores predichos y evaluarlos utilizando métricas de regresión lineal
+# Estructura de datos para almacenar los resultados
+scores= {"Model name": ["Linear regression", "SVM", "Random Forest"], "mse": [], "R^2": []}
+
+# Predecir en el conjunto de prueba
+y_pred = regressor.predict(X_test)
+
+# Calcular R^2 y MSE
+r2 = r2_score(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+
+# Agregar los resultados a la estructura de datos de puntuaciones
+scores['mse'].append(mse)
+scores['R^2'].append(r2)
+
+# Imprimir los resultados
+print("R^2: {:.2f}, MSE: {:.2f}".format(r2, mse))
