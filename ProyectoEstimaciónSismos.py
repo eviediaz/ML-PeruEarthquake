@@ -60,3 +60,15 @@ scores['R^2'].append(r2)
 
 # Imprimir los resultados
 print("R^2: {:.2f}, MSE: {:.2f}".format(r2, mse))
+
+# Predecir para nuevos datos
+# Datos nuevos con solo las características relevantes
+new_data = [[33.89, -118.40, 16.17], [37.77, -122.42, 8.05]]
+
+# Convertir los nuevos datos a un DataFrame con los mismos nombres de columnas que los datos de entrenamiento
+new_data_df = pd.DataFrame(new_data, columns=['LATITUD', 'LONGITUD', 'PROFUNDIDAD'])
+
+# Hacer predicciones con los nuevos datos
+new_pred = regressor.predict(new_data_df)
+print("Nuevas predicciones:", new_pred)
+
