@@ -89,3 +89,21 @@ plt.title('Modelo de Regresion Lineal Multiple')
 
 # Mostrar el grafico
 plt.show()
+
+#SVM
+#Cargando el modelo y ajustandolo con datos de entrenamiento
+# Seleccionar un subconjunto de los datos de entrenamiento
+subset_size = 500
+X_train_subset = X_train[:subset_size]
+y_train_subset = y_train[:subset_size]
+
+# Crear un modelo SVM
+svm = SVR(kernel='rbf', C=1e3, gamma=0.1)
+
+# Entrenar el modelo SVM en el subconjunto de datos
+svm.fit(X_train_subset, y_train_subset)
+
+# Evaluar el modelo en el conjunto de prueba
+score = svm.score(X_test, y_test)
+print("Resultado de la prueba:", score)
+
