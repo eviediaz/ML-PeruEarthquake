@@ -38,12 +38,12 @@ y = df['MAGNITUD']
 # Dividir los datos en conjuntos de entrenamiento y prueba
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-# Entrenar el modelo de regresión lineal
+# Entrenar el modelo de regresion lineal
 regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
 #Predecir los datos de prueba
-#Encuentrar los valores predichos y evaluarlos utilizando métricas de regresión lineal
+#Encuentrar los valores predichos y evaluarlos utilizando métricas de regresion lineal
 # Estructura de datos para almacenar los resultados
 scores= {"Model name": ["Linear regression", "SVM", "Random Forest"], "mse": [], "R^2": []}
 
@@ -62,7 +62,7 @@ scores['R^2'].append(r2)
 print("R^2: {:.2f}, MSE: {:.2f}".format(r2, mse))
 
 # Predecir para nuevos datos
-# Datos nuevos con solo las características relevantes
+# Datos nuevos con solo las caracteristicas relevantes
 new_data = [[33.89, -118.40, 16.17], [37.77, -122.42, 8.05]]
 
 # Convertir los nuevos datos a un DataFrame con los mismos nombres de columnas que los datos de entrenamiento
@@ -72,3 +72,20 @@ new_data_df = pd.DataFrame(new_data, columns=['LATITUD', 'LONGITUD', 'PROFUNDIDA
 new_pred = regressor.predict(new_data_df)
 print("Nuevas predicciones:", new_pred)
 
+# Traza la linea de regresion para 'LATITUD'
+sns.regplot(x=X_test['LATITUD'], y=y_test, color='blue', scatter_kws={'s': 10})
+# Traza la linea de regresion para 'LONGITUD'
+sns.regplot(x=X_test['LONGITUD'], y=y_test, color='red', scatter_kws={'s': 10})
+# Traza la linea de regresion para 'PROFUNDIDAD'
+sns.regplot(x=X_test['PROFUNDIDAD'], y=y_test, color='yellow', scatter_kws={'s': 10})
+
+# Ajustar la leyenda para las variables predictoras
+plt.legend(labels=['LATITUD', 'LONGITUD', 'PROFUNDIDAD'])
+
+# Etiquetas de los ejes y titulo del grafico
+plt.xlabel('Variables Predictoras')
+plt.ylabel('Magnitud')
+plt.title('Modelo de Regresion Lineal Multiple')
+
+# Mostrar el grafico
+plt.show()
