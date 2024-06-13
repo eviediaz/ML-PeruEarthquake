@@ -107,3 +107,17 @@ svm.fit(X_train_subset, y_train_subset)
 score = svm.score(X_test, y_test)
 print("Resultado de la prueba:", score)
 
+# Predecir en el conjunto de prueba con el modelo SVM
+y_pred_svm = svm.predict(X_test)
+
+# Calcular R² y MSE
+r2_svm = r2_score(y_test, y_pred_svm)
+mse_svm = mean_squared_error(y_test, y_pred_svm)
+
+# Añadir las métricas al diccionario 'scores'
+scores['mse'].append(mse_svm)
+scores['R^2'].append(r2_svm)
+
+# Imprimir las métricas
+print("SVM R^2: {:.2f}, MSE: {:.2f}".format(r2_svm, mse_svm))
+
