@@ -199,3 +199,18 @@ display(scores_df)
 scores_df[scores_df["mse"] == scores_df["mse"].min()]
 
 scores_df[scores_df["R^2"] == scores_df["R^2"].max()]
+
+# DATASET COMPLEMENTARIO
+#Se modifico el dataset anterior abarcando las fechas de mayo de 2001 hasta marzo 2023
+#la base de datos complementaria solo tiene datos de mayo de 2001 hasta mayo de 2024
+
+bdm = pd.read_csv('/MyDrive/MyDrive/DATASETMODIFICADO.csv', encoding='utf8', delimiter=r';')
+
+bdm.head()
+
+bdm['MAX_MAGNITUD'] = bdm['MAX_MAGNITUD'].astype(str).str.replace(',', '.').astype(float)
+bdm['MIN_MAGNITUD'] = bdm['MIN_MAGNITUD'].astype(str).str.replace(',', '.').astype(float)
+bdm['PROM_MAGNITUD'] = bdm['PROM_MAGNITUD'].astype(str).str.replace(',', '.').astype(float)
+bdm['TASA_DE_DESEMPLEO'] = bdm['TASA_DE_DESEMPLEO'].astype(str).str.replace(',', '.').astype(float)
+
+print(bdm.dtypes)
