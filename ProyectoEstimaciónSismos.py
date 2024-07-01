@@ -214,3 +214,47 @@ bdm['PROM_MAGNITUD'] = bdm['PROM_MAGNITUD'].astype(str).str.replace(',', '.').as
 bdm['TASA_DE_DESEMPLEO'] = bdm['TASA_DE_DESEMPLEO'].astype(str).str.replace(',', '.').astype(float)
 
 print(bdm.dtypes)
+
+# Seleccionar columnas relevantes
+Xm = bdm[['CANTIDAD_DE_SISMOS','MAX_MAGNITUD', 'MIN_MAGNITUD', 'PROM_MAGNITUD']]
+ym = bdm['TASA_DE_DESEMPLEO']
+
+# Dividir los datos en conjuntos de entrenamiento y prueba
+Xm_train, Xm_test, ym_train, ym_test = train_test_split(Xm, ym, test_size=0.2, random_state=0)
+
+# entrenar modelo
+regressorm = LinearRegression()
+regressorm.fit(Xm_train, ym_train)
+
+# Predecir para nuevos datos
+# Datos nuevos con solo las características relevantes
+new_datam = [[51, 6, 4, 4.4], [34,5.4, 3.4,4.5]]
+
+# Convertir los nuevos datos a un DataFrame con los mismos nombres de columnas que los datos de entrenamiento
+new_data_bdm = pd.DataFrame(new_datam, columns=['CANTIDAD_DE_SISMOS','MAX_MAGNITUD', 'MIN_MAGNITUD', 'PROM_MAGNITUD'])
+
+# Hacer predicciones con los nuevos datos
+new_predm = regressorm.predict(new_data_bdm)
+print("Nuevas predicciones:", new_predm)
+
+#Trazar modelo de regresión lineal múltiple para el dataset complementario
+
+# Traza la línea de regresión para 'CANTIDAD_DE_SISMOS'
+sns.regplot(x=Xm_test['CANTIDAD_DE_SISMOS'], y=ym_test, color='blue', scatter_kws={'s': 10})
+# Traza la línea de regresión para 'MAX_MAGNITUD'
+sns.regplot(x=Xm_test['MAX_MAGNITUD'], y=ym_test, color='red', scatter_kws={'s': 10})
+# Traza la línea de regresión para 'MIN_MAGNITUD'
+sns.regplot(x=Xm_test['MIN_MAGNITUD'], y=ym_test, color='yellow', scatter_kws={'s': 10})
+# Traza la línea de regresión para 'PROM_MAGNITUD'
+sns.regplot(x=Xm_test['PROM_MAGNITUD'], y=ym_test, color='green', scatter_kws={'s': 10})
+
+# Ajustar la leyenda para las variables predictoras
+plt.legend(labels=['CANTIDAD_DE_SISMOS', 'MAX_MAGNITUD','MIN_MAGNITUD', 'PROM_MAGNITUD'])
+
+# Etiquetas de los ejes y título del gráfico
+plt.xlabel('Variables Predictoras')
+plt.ylabel('Tasa de desempleo')
+plt.title('Modelo de Regresión Lineal Múltiple')
+
+# Mostrar el gráfico
+plt.show()
