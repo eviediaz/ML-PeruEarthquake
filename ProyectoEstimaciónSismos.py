@@ -179,3 +179,23 @@ plt.xlabel('Predicciones')
 plt.ylabel('Residuos')
 plt.axhline(y=0, color='black', linestyle='--')
 plt.show()
+
+#Actual vs Predicciones
+#Se puede utilizar un gráfico de líneas para mostrar la tendencia de los valores reales y previstos a lo largo del tiempo (si los datos son series de tiempo). Puede crear un gráfico de líneas utilizando la función plot().
+
+plt.plot(y_test, label='Valores Reales', marker='o')
+plt.plot(y_pred, label='Predicciones', marker='x')
+plt.title('Comparación de Valores Reales vs. Predicciones')
+plt.xlabel('Índice de Muestra')
+plt.ylabel('Valor')
+plt.legend()
+plt.show()
+
+# COMPARACIÓN DE MODELOS
+
+scores_df = pd.DataFrame(scores)
+display(scores_df)
+
+scores_df[scores_df["mse"] == scores_df["mse"].min()]
+
+scores_df[scores_df["R^2"] == scores_df["R^2"].max()]
