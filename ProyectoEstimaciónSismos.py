@@ -121,3 +121,61 @@ scores['R^2'].append(r2_svm)
 # Imprimir las métricas
 print("SVM R^2: {:.2f}, MSE: {:.2f}".format(r2_svm, mse_svm))
 
+#Random Forest
+#Cargando el modelo y ajustándolo con datos de entrenamiento.
+from sklearn.ensemble import RandomForestRegressor
+
+# Crear una instancia del modelo RandomForestRegressor
+rf_model = RandomForestRegressor()
+
+# Entrenar el modelo
+rf_model.fit(X_train, y_train)
+
+#Predecir los datos de prueba y evaluarlos.
+#Encuentre los valores predichos y evalúelos usando métricas como MSE, r2
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Predecir sobre datos de prueba
+y_pred = rf_model.predict(X_test)
+
+# Evaluar el modelo
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+scores['mse'].append(mse)
+scores['R^2'].append(r2)
+
+print(f'Mean Squared Error: {mse}')
+print(f'R2 Score: {r2}')
+
+#Gráfico de dispersión
+import matplotlib.pyplot as plt
+
+plt.scatter(y_test, y_pred, color='blue')
+plt.title('Scatter Plot de Valores Reales vs. Predicciones')
+plt.xlabel('Valores Reales')
+plt.ylabel('Predicciones')
+plt.show()
+
+#Importancia de la característica
+#Este gráfico muestra la importancia de cada característica en el modelo. Puede crear un gráfico de importancia de características utilizando el atributo feature_importances_ del modelo de bosque aleatorio.
+importances = rf_model.feature_importances_
+features = X.columns
+
+plt.figure(figsize=(10, 6))
+plt.barh(features, importances, align='center')
+plt.xlabel('Importancia de Características')
+plt.ylabel('Características')
+plt.title('Importancia de Características - Random Forest')
+plt.show()
+
+#Residuos del modelo
+#Un gráfico residual muestra la diferencia entre los valores reales y los valores predichos. Puede crear un gráfico residual utilizando la función residplot() de la biblioteca seaborn.
+residuals = y_test - y_pred
+
+plt.scatter(y_pred, residuals, color='green')
+plt.title('Residual Plot')
+plt.xlabel('Predicciones')
+plt.ylabel('Residuos')
+plt.axhline(y=0, color='black', linestyle='--')
+plt.show()
